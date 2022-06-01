@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
+
+<style>
+    .slider{
+        width: 848px;
+        margin: auto;
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .slider__container{
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        gap: 30px;
+        transition: all 0.25s ease 0s;
+    }
+    .slider__item{
+        width: 202px;
+        display: flex;
+        height: 234px;
+    }
+    .slider__image{
+        object-fit: cover;
+        width: 100%;
+    }
+    .active{
+        display: flex;
+        width: 384px;
+        height: 447px;
+    }
+    .slider__switch a{
+        font-size: 30px;
+        font-weight: bold;
+        color: green;
+        cursor: pointer;
+    }
+    .slider__switch{
+        display: flex;
+    }
+</style>
+<div class="slider">
+    <div class="slider__container">
+        <a class="slider__item">
+            <img class="slider__image" src="./lesnaja-1024x779.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./7a5f817856f2b3e6d3b1b32e7dba9c67.jpeg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./lesnaja-1024x779.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./7a5f817856f2b3e6d3b1b32e7dba9c67.jpeg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+        <a class="slider__item">
+            <img class="slider__image" src="./eb08e205c4865e5f6d6313b307c10c5c.jpg" />
+        </a>
+    </div>
+    <div class="slider__switch">
+        <a role="button" class="slider__switch-prev"> < </a>
+        <p class="slider__switch-number"></p>
+        <a role="button" class="slider__switch-next"> > </a>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        let slideIndex = 1;
+        let intervalID;
+        let slideDel = -1;
+        const slides = document.getElementsByClassName("slider__item");
+
+        showSlides(slideIndex);
+        let slide3d = 100 * slides.length;
+        console.log(slides.length)
+        const slidesContainer = document.querySelector('.slider__container')
+        slidesContainer.style = `transform: translate3d(${slide3d}px,0,0)`;
+        function showSlides(n) {
+
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (let slide of slides) {
+                slide.classList.remove('active')
+
+            }
+
+            slides[slideIndex - 1].classList.add('active');
+
+            console.log(slideIndex,slides.length)
+            document.querySelector('.slider__switch-number').innerHTML = slideIndex
+        }
+
+        /*let timer = 0;
+        makeTimer(); //Создаем интервал
+        function makeTimer(){
+            clearInterval(timer) //Очистим интервал, это позволит прервать его работу и отменить перелистывание
+            timer = setInterval(function(){
+                slideIndex++;
+                showSlides(slideIndex);
+            },5000);
+        }*/
+        function nextSlide(){
+            if(slideIndex !== slides.length){
+                slidesContainer.style = `transform: translate3d(${slide3d}px,0,0)`
+                slide3d -= 235;
+                console.log(slideIndex === slides.length)
+                console.log(3)
+
+            } else if(slideIndex !== slides.length){
+                slide3d = slides.length* 235-810;
+                console.log(4)
+            } else {
+                console.log(2)
+                slide3d = 100 * slides.length;
+                slidesContainer.style = `transform: translate3d(${slide3d}px,0,0)`
+
+            }
+            showSlides(slideIndex += 1);
+
+        }
+        function prevSlide() {
+            showSlides(slideIndex -= 1);
+            if(slideIndex !== slides.length){
+                slide3d += 230;
+                slidesContainer.style = `transform: translate3d(${slide3d}px,0,0)`
+            } else{
+                slide3d = -1050;
+                slide3d = slidesContainer.clientWidth - 100 * slides.length + (-235*slideIndex) -100
+                slidesContainer.style = `transform: translate3d(${slide3d}px,0,0)`
+            }
+
+        }
+        document.querySelector('.slider__switch-next').addEventListener('click',nextSlide)
+        document.querySelector('.slider__switch-prev').addEventListener('click',prevSlide)
+    })
+</script>
+</body>
+</html>
